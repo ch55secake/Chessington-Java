@@ -15,11 +15,43 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
+        // if pawn has never moved it can move two
         List<Move> moveList = new ArrayList<>();
-        Coordinates coordinateAbove = new Coordinates(from.getRow()-1 , from.getCol());
-        Move move = new Move(from, coordinateAbove);
-        moveList.add(move);
+        if (colour == PlayerColour.WHITE) {
+            if (from.getRow() == 6) {
+                Coordinates coordinateAbove = new Coordinates(from.getRow() - 2, from.getCol());
+                Move move = new Move(from, coordinateAbove);
+                moveList.add(move);
+            }
 
-        return moveList;
+                Coordinates coordinateAbove = new Coordinates(from.getRow() - 1, from.getCol());
+                Move move = new Move(from, coordinateAbove);
+                moveList.add(move);
+
+                return moveList;
+
+        }
+        else  {
+            if (from.getRow() == 1) {
+                Coordinates coordinateAbove = new Coordinates(from.getRow() + 2, from.getCol()); // or add 1 to the move list
+                Move move = new Move(from, coordinateAbove);
+                moveList.add(move);
+            }
+
+                Coordinates coordinateAbove = new Coordinates(from.getRow() + 1, from.getCol());
+                Move move = new Move(from, coordinateAbove);
+                moveList.add(move);
+
+                return moveList;
+
+
+
+        }
     }
 }
+
+
+
+
+
+
