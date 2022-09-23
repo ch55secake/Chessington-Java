@@ -3,18 +3,16 @@ package training.chessington.view;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.GridPane;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import training.chessington.model.Game;
-import training.chessington.model.InvalidMoveException;
-import training.chessington.model.Move;
+import training.chessington.model.*;
+import training.chessington.model.pieces.Pawn;
+import training.chessington.model.pieces.Piece;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class ChessApp extends Parent {
 
-    private static final Logger LOGGER = LogManager.getLogger();
+ //   private static final Logger LOGGER = LogManager.getLogger();
 
     private final Game game;
     private GridPane grid;
@@ -42,6 +40,16 @@ public class ChessApp extends Parent {
             }
         }
     }
+    private void pawnMovement(Square square){
+        Board board = Board.empty();
+        buildDisplayBoard();
+        Piece pawn  = new Pawn(PlayerColour.WHITE);
+        onNewSquareSelected(square);
+        Coordinates coordinates = selectedSquare.getCoordinates();
+        board.placePiece(coordinates, pawn);
+
+
+    }
 
     private void onSquareClicked(Square square) {
         if (validMoveSquares.contains(square)) {
@@ -55,7 +63,7 @@ public class ChessApp extends Parent {
         try {
             game.makeMove(new Move(selectedSquare.getCoordinates(), moveTo.getCoordinates()));
         } catch (InvalidMoveException e) {
-            LOGGER.error("Invalid move attempted", e);
+          //  LOGGER.error("Invalid move attempted", e);
         }
         redrawPieces();
         resetHighlighting();
