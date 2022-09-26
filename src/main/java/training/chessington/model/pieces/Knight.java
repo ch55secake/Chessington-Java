@@ -1,6 +1,5 @@
 package training.chessington.model.pieces;
 
-import javafx.scene.layout.CornerRadii;
 import training.chessington.model.Board;
 import training.chessington.model.Coordinates;
 import training.chessington.model.Move;
@@ -26,26 +25,37 @@ public class Knight extends AbstractPiece {
         }
         // as they always start in the same place make it so that the they cannot run off the map
         // similar rules to pawn inverse where the first move it moves less and after it can move more.
-        if (colour == PlayerColour.WHITE) {
-            Coordinates horseMove1 = new Coordinates(from.getRow() - 1, from.getCol() + 2);
-            Coordinates horseMove2 = new Coordinates(from.getRow() - 2, from.getCol() + 1);
-            Move move = new Move(from, horseMove1);
-            Move move2 = new Move(from, horseMove2);
-            moveList.add(move);
-            moveList.add(move2);
-        }
-        if(colour == PlayerColour.BLACK) {
-            Coordinates blackHorse1 = new Coordinates(from.getRow() + 1, from.getCol() + 2);
-            Coordinates blackHorse2 = new Coordinates(from.getRow() + 2, from.getCol() + 1);
-            Move blackMove = new Move(from, blackHorse1);
-            Move blackMove2 = new Move(from, blackHorse2);
-            moveList.add(blackMove);
-            moveList.add(blackMove2);
+        moveList = returnMoveifValid(from, from.getRow() + 1, from.getCol() - 2, board, moveList, colour);
+        moveList = returnMoveifValid(from, from.getRow() + 2, from.getCol() - 1, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow() + 2, from.getCol() + 1, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow() + 1, from.getCol() + 2, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow() - 2, from.getCol() +1, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow() -2, from.getCol() - 1, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow() -1, from.getCol()- 2, board, moveList,colour);
+        moveList = returnMoveifValid(from, from.getRow()- 1, from.getCol() +2, board, moveList,colour);
 
-        }
 
         return moveList;
 
 
+    }
+
+    public static List<Move> returnMoveifValid(Coordinates from, int row, int column, Board board, List<Move> moveList, PlayerColour colour) {
+        if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
+            Coordinates checkingCoords = new Coordinates(row, column);
+            if (board.get(checkingCoords) == null) {
+                Move move = new Move(from, checkingCoords);
+                moveList.add(move);
+
+
+            } else {
+                if(! board.get(checkingCoords).getColour().equals(colour)) {
+                    Move move = new Move(from, checkingCoords);
+                    moveList.add(move);
+                }
+            }
+
+        }
+        return moveList;
     }
 }
