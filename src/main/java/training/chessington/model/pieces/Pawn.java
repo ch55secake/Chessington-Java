@@ -15,7 +15,6 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        // if pawn has never moved it can move two
         List<Move> moveList = new ArrayList<>();
 
         if (getColour().equals(PlayerColour.WHITE) && from.getRow() == 0) {

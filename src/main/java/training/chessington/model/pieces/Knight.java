@@ -8,6 +8,8 @@ import training.chessington.model.PlayerColour;
 import java.util.ArrayList;
 import java.util.List;
 
+import static training.chessington.model.pieces.Rook.getMoves;
+
 public class Knight extends AbstractPiece {
     public Knight(PlayerColour colour) {
         super(PieceType.KNIGHT, colour);
@@ -41,21 +43,6 @@ public class Knight extends AbstractPiece {
     }
 
     public static List<Move> returnMoveifValid(Coordinates from, int row, int column, Board board, List<Move> moveList, PlayerColour colour) {
-        if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
-            Coordinates checkingCoords = new Coordinates(row, column);
-            if (board.get(checkingCoords) == null) {
-                Move move = new Move(from, checkingCoords);
-                moveList.add(move);
-
-
-            } else {
-                if(! board.get(checkingCoords).getColour().equals(colour)) {
-                    Move move = new Move(from, checkingCoords);
-                    moveList.add(move);
-                }
-            }
-
-        }
-        return moveList;
+        return getMoves(from, row, column, board, moveList, colour);
     }
 }
